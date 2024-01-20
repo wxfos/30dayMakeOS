@@ -2,6 +2,8 @@
 
 void io_hlt(void);
 void io_cli(void);
+void io_sti(void);
+void io_stihlt();
 void io_out8(int port, int data);
 int io_load_eflags(void);
 void io_store_eflags(int eflags);
@@ -77,9 +79,11 @@ void HariMain(void)
 
 	sprintf(s, "scrnx = %d", binfo->scrnx);
 	putfonts8_asc(binfo->vram, binfo->scrnx, 16, 64, COL8_FFFFFF, s);
-
+	int c = 0;
+	//io_sti();
 	for (;;) {
-		io_hlt();
+		putfonts8_asc(binfo->vram, binfo->scrnx,  8,  50, c++, "hlt");
+		io_stihlt();
 	}
 }
 
